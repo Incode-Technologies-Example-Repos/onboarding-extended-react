@@ -8,12 +8,12 @@ We used the default Vite 5 Typescript React Template with some key changes:
 * Used .env file to configure the project.
 * A reverse proxy configuration to serve a backend server from your own localhost
 
-# Backend Server
+## Backend Server
 A backend server that will generate the url is needed for this sample,
-luckily for you we already have sample server for NodeJS, please reffer
+luckily for you we already have a sample server for NodeJS, please reffer
 to our documentation on subject: [Sample Backend Server](https://developer.incode.com/docs/code-samples-for-web-integrations#backend-sample-server)
 
-In order to simplfy development, this repo is configured to reverse
+In order to simplify development, this repo is configured to reverse
 proxy a local backend server (`http://localhost:3000`) in the `/api`
 url like `https://<your-ip>:5173/api`, if you want to point your
 frontend development to a backend server deployed elsewhere, change
@@ -44,7 +44,7 @@ To run the project execute the following command in the terminal:
 npm run dev
 ```
 
-# Steps:
+## Steps:
 This sample implements the following steps.
 * RedirectToMobile: Provides a convenient way to move the users to complete onboarding in a mobile phone, it has a QR code and a SMS sending feature.
 * UserConsent: Before we start capturing any information we need the users consent
@@ -110,3 +110,7 @@ sequenceDiagram
     end
     note over f: Finish screen
 ```
+
+## Author
+
+© Incode Technologies Inc. All rights reserved.
