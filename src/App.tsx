@@ -6,15 +6,12 @@ import { FrontId } from './components/FrontId';
 import { BackId } from './components/BackId';
 import { ProcessId } from './components/ProcessId';
 import { Selfie } from './components/Selfie';
-import { ProcessFace } from './components/ProcessFace';
-import { FinishOnboarding } from './components/FinishOnboarding';
 import { UserConsent } from './components/UserConsent';
 
+const tokenServerURL = import.meta.env.VITE_TOKEN_SERVER_URL as string;
 
 //Function to fetch the onboarding session
 async function startOnboardingSession() {
-  const tokenServerURL = import.meta.env.VITE_TOKEN_SERVER_URL as string;
-  
   const urlParams = new URLSearchParams(window.location.search);
   const uniqueId = urlParams.get('uniqueId');
   
@@ -30,6 +27,21 @@ async function startOnboardingSession() {
   return await response.json() as SessionType;
 }
 
+async function finishOnboardingSession(token:string) {
+  // Connect with your backend service to finish the session
+  const response = await fetch(`${tokenServerURL}/finish`, {
+      method: "POST",
+      body: JSON.stringify({token})
+  });
+  
+  if (!response.ok) {
+      const data = await response.json();
+      throw new Error(data.error);
+  }
+  
+  return await response.json();
+}
+
 function App() {
   const [session, setSession] = useState<null|SessionType>(null); // Stores the Session
   
@@ -40,7 +52,11 @@ function App() {
     setStep(step + 1);
   }
   function goLast() {
-    setStep(8);
+    setStep(6);
+  }
+  async function finishOnboarding() {
+    if(session) finishOnboardingSession(session.token);
+    goLast();
   }
   
   // Error Handling
@@ -77,9 +93,7 @@ function App() {
       <FrontId session={session} onError={handleError} onSuccess={goNext}/>
       <BackId session={session} onError={handleError} onSuccess={goNext}/>
       <ProcessId  session={session} onError={handleError} onSuccess={goNext} />
-      <Selfie session={session} onError={handleError} onSuccess={goNext}/>
-      <ProcessFace  session={session} onError={handleError} onSuccess={goNext} />
-      <FinishOnboarding session={session} onError={handleError} onSuccess={goNext} />
+      <Selfie session={session} onError={handleError} onSuccess={finishOnboarding}/>
       <h1>Done!</h1>
     </Steps>
   )
