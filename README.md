@@ -105,8 +105,7 @@ sequenceDiagram
         note over f: BackId
         note over f: ProcessId
         note over f: Selfie
-        note over f: ProcessFace
-        note over f: FinishOnboarding
+        note over f: Finish Onboarding
     end
     note over f: Finish screen
 ```
