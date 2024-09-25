@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@incodetech/welcome": "^1.71.0",
+    "@incodetech/welcome": "^1.75.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "vite-plugin-mkcert": "^1.17.5"
