@@ -1,11 +1,13 @@
 import { useEffect, useRef } from "react";
 import { incode, type SessionType } from "../incode";
 
-export function ProcessId({ session, onSuccess, onError }: {
+type Props = {
   session: SessionType;
   onSuccess: () => void;
-  onError: (e:{type:string}) => void;
-}) {
+  onError: (e: { type: string }) => void;
+};
+
+export function ProcessFace({ session, onSuccess, onError }: Props) {
   const ran = useRef(false);
 
   useEffect(() => {
@@ -14,14 +16,14 @@ export function ProcessId({ session, onSuccess, onError }: {
 
     (async () => {
       try {
-        await incode.processId({ token: session.token });
+        await incode.processFace({ token: session.token });
         onSuccess();
       } catch (e) {
         console.error(e);
-        onError({ type: "Couldn't process ID" });
+        onError({ type: "Couldn't process face" });
       }
     })();
   }, [session.token, onSuccess, onError]);
 
-  return <p>Processing ID...</p>;
+  return <p>Processing face...</p>;
 }

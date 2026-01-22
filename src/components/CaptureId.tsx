@@ -8,7 +8,7 @@ type Props = {
   onError: (e: { type: string }) => void;
 };
 
-export function Selfie({ session, onSuccess, onError }: Props) {
+export function CaptureId({ session, onSuccess, onError }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mounted = useRef(false);
 
@@ -16,24 +16,18 @@ export function Selfie({ session, onSuccess, onError }: Props) {
     if (mounted.current) return;
     mounted.current = true;
 
-    const el = containerRef.current;
-    if (!el) {
-      onError({ type: "Missing selfie container" });
+    if (!containerRef.current) {
+      onError({ type: "Missing container" });
       return;
     }
 
-    try {
-      incode.renderCaptureFace(el, {
-        session,
-        forceV2: true,
-        uiConfig: v2UiConfig,
-        onSuccess: () => onSuccess(),
-        onError: () => onError({ type: "Couldn't Capture Selfie (V2)" }),
-      });
-    } catch (e) {
-      console.error(e);
-      onError({ type: "Selfie V2 renderer crashed" });
-    }
+    incode.renderCaptureId(containerRef.current, {
+      session,
+      forceIdV2: true,
+      uiConfig: v2UiConfig,
+      onSuccess: () => onSuccess(),
+      onError: () => onError({ type: "Couldn't Capture ID (V2)" }),
+    });
 
     return () => {
     };
